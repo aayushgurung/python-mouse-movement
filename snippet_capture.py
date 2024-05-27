@@ -17,4 +17,4 @@ def capture_snippet(name,x,y, width, height):
     snippet.save(file_path)
 
 
-capture_snippet('is_training_complete',652,419,190,25)
+# capture_snippet('battle_or_not',851,344,225,225)

@@ -28,4 +28,4 @@ def compare_images(image1_name, image2_name,threshold_score):
     else:
         return False
 
-print(compare_images(image1_name='is_training_complete',image2_name='training',threshold_score=0.7))
+# print(compare_images(image1_name='new_ability_static',image2_name='new_ability',threshold_score=0.7))
