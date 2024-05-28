@@ -20,14 +20,27 @@ point1 = (1296, 269)
 intermediate_point1 = (660, 934)
 intermediate_point2 = (873, 813)
 
+battle_or_not_path = 'enemy_checks/battle_or_not.png'
+
+def delete_battle_or_not_file():
+    if os.path.exists(battle_or_not_path):
+        os.remove(battle_or_not_path)
+        print(f'Deleted: {battle_or_not_path}')
+    else:
+        print(f'File not found: {battle_or_not_path}')
+        
+delete_battle_or_not_file()
+
 def perform_actions_at_point(start_point, intermediate_point, final_point):
     pyautogui.moveTo(start_point[0], start_point[1], duration=0)
     pyautogui.click()
-    time.sleep(4)
-    capture_snippet('battle_or_not',851,344,225,225)
-     
-    if not (compare_images(image1_name='battle_static',image2_name='battle_or_not',threshold_score=0.6)):
-        print('Comparing battle static and battle or not png')
+    print('Clicking to find miscrits')
+    time.sleep(8)
+    capture_snippet(x =1163 ,y =100 ,name = 'battle_or_not',width=125,height=25)
+    print('Captured Snippet for Battle')
+    
+    if not (compare_images(image1_name='battle_static',image2_name='battle_or_not',threshold_score=0.7)):
+        print('Exiting perform_actions_at_point method at ',start_point,' ',intermediate_point,' ',final_point,'\n')
         return True
     else:
         time.sleep(5)
@@ -38,8 +51,8 @@ def perform_actions_at_point(start_point, intermediate_point, final_point):
 
         pyautogui.moveTo(intermediate_point[0], intermediate_point[1], duration=0)
         
-        time.sleep(7)
-        c = 5
+        time.sleep(4)
+        c = 10
         for _ in range(c):
             pyautogui.click()
             time.sleep(7)
@@ -52,20 +65,20 @@ def perform_actions_at_point(start_point, intermediate_point, final_point):
                 break  
         
         capture_snippet(x= x_train,y = y_train,name = 'is_training_complete',width=190,height=25)
-        time.sleep(1)
-        print('Compare trained ',compare_images(image1_name='is_training_complete',image2_name='training',threshold_score=0.6))
+        time.sleep(2)
+        # print('Compare trained ',compare_images(image1_name='is_training_complete',image2_name='training',threshold_score=0.6))
         
         if compare_images(image1_name='is_training_complete',image2_name='training',threshold_score=0.7):
             close(final_point=final_point)
-            print('Miscrit is trained')
+            print('\n XP FULL \n')
             perform_post_training_actions()
             time.sleep(3)
         else:
             print('Not trained')
             close(final_point=final_point)
+        print('Exiting perform_actions_at_point method at ',start_point,' ',intermediate_point,' ',final_point,'\n')
         return True
     
-
 def close(final_point):
     pyautogui.moveTo(final_point[0], final_point[1], duration=0.2)
     time.sleep(1)
@@ -78,7 +91,7 @@ def perform_actions_in_loop():
     print('Starting the bot')
     while True:
         for start_point, intermediate_point, final_point in points:
-            print('AT THIS POINT',start_point,' ',intermediate_point,' ',final_point)
+            print('\nENTERING',start_point,' ',intermediate_point,' ',final_point)
             if not perform_actions_at_point(start_point, intermediate_point, final_point):
                 break
         else:
@@ -90,24 +103,28 @@ def perform_post_training_actions():
         (555, 82, 2),
         (597, 310, 2),
         (925, 195, 3),
+        (774, 892, 2),
         (1055, 892, 6),
         (1313, 162, 2)
     ]
     
     for x, y, sleep_time in steps:
+        print('TRAINING:',x,' ' ,y)
         pyautogui.moveTo(x, y, duration=0)
         time.sleep(sleep_time)
         capture_snippet('new_ability',635,407,500,250)
         if compare_images(image1_name='new_ability_static',image2_name='new_ability',threshold_score=0.7):
             time.sleep(1)
+            print('TRAINING:',x,' ' ,y,' ABILITY NEW')
+            
             close(final_point=(879,658))
-            print('New Ability')
+            print('New Ability CHECK')
             time.sleep(2)
             pyautogui.moveTo(x, y, duration=0)
-            time.sleep(1)
-            pyautogui.click()
+
             time.sleep(2)
         pyautogui.click()
+    return True
         
 time.sleep(3)
 

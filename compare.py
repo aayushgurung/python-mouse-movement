@@ -5,7 +5,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-
 def compare_images(image1_name, image2_name,threshold_score):
     
     image_path = os.getenv('IMAGE_PATH')
@@ -13,7 +12,7 @@ def compare_images(image1_name, image2_name,threshold_score):
     image1_path = os.path.join(image_path, image1_name+'.png')
     image2_path = os.path.join(image_path, image2_name+'.png')
     
-    print('IMAGES PATH',image1_path,' ',image2_path)
+    print('From compare_images method:  IMAGES PATH',image1_path,' ',image2_path)
     image1 = cv2.imread(image1_path)
     image2 = cv2.imread(image2_path)
 
@@ -22,10 +21,13 @@ def compare_images(image1_name, image2_name,threshold_score):
 
     (score, _) = compare_ssim(gray_image1, gray_image2, full=True)
 
-    print(score)
-    if score >= threshold_score:
+    formatted_score = float(format(score, 'f'))
+    # print(formatted_score)
+    if formatted_score >= threshold_score:
+        print('score greater')
         return True
     else:
+        print('score lesser')
         return False
 
-# print(compare_images(image1_name='new_ability_static',image2_name='new_ability',threshold_score=0.7))
+# print(compare_images(image1_name='battle_static',image2_name='battle_or_not',threshold_score=0.7))
