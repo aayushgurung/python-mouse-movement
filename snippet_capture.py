@@ -18,4 +18,5 @@ def capture_snippet(name,x,y, width, height):
 
 
 # capture_snippet('battle_or_not',935,376,60,170)
-# capture_snippet(x =1163 ,y =100 ,name = 'battle_or_not',width=125,height=25)
+# capture_snippet(x =587 ,y =208 ,name = 'evolution_static',width=150,height=40)
+# capture_snippet(x =676 ,y =244 ,name = 'evolution_static',width=50,height=25)

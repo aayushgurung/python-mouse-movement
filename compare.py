@@ -22,7 +22,7 @@ def compare_images(image1_name, image2_name,threshold_score):
     (score, _) = compare_ssim(gray_image1, gray_image2, full=True)
 
     formatted_score = float(format(score, 'f'))
-    # print(formatted_score)
+    print(formatted_score)
     if formatted_score >= threshold_score:
         print('score greater')
         return True
@@ -31,3 +31,4 @@ def compare_images(image1_name, image2_name,threshold_score):
         return False
 
 # print(compare_images(image1_name='battle_static',image2_name='battle_or_not',threshold_score=0.7))
+# compare_images(image1_name='evolution_or_not',image2_name='evolution_static',threshold_score=0.7)

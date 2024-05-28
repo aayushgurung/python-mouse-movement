@@ -6,6 +6,7 @@ from compare import compare_images
 from dotenv import load_dotenv
 
 load_dotenv()
+
 image1_path = os.getenv('IMAGE1_PATH')
 image2_path = os.getenv('IMAGE2_PATH')
 
@@ -21,14 +22,12 @@ intermediate_point1 = (660, 934)
 intermediate_point2 = (873, 813)
 
 battle_or_not_path = 'enemy_checks/battle_or_not.png'
+evol_file = 'enemy_checks/battle_or_not.png'
 
 def delete_battle_or_not_file():
-    if os.path.exists(battle_or_not_path):
-        os.remove(battle_or_not_path)
-        print(f'Deleted: {battle_or_not_path}')
-    else:
-        print(f'File not found: {battle_or_not_path}')
-        
+    os.remove(battle_or_not_path) if os.path.exists(battle_or_not_path) else print(f'File not found: {battle_or_not_path}')
+    os.remove(evol_file) if os.path.exists(evol_file) else print(f'File not found: {evol_file}')
+
 delete_battle_or_not_file()
 
 def perform_actions_at_point(start_point, intermediate_point, final_point):
@@ -99,30 +98,37 @@ def perform_actions_in_loop():
         break  
 
 def perform_post_training_actions():
-    steps = [
-        (555, 82, 2),
+    steps = [(555, 82, 2),
         (597, 310, 2),
         (925, 195, 3),
         (774, 892, 2),
         (1055, 892, 6),
-        (1313, 162, 2)
-    ]
+        (1313, 162, 2)]
     
     for x, y, sleep_time in steps:
         print('TRAINING:',x,' ' ,y)
         pyautogui.moveTo(x, y, duration=0)
         time.sleep(sleep_time)
-        capture_snippet('new_ability',635,407,500,250)
-        if compare_images(image1_name='new_ability_static',image2_name='new_ability',threshold_score=0.7):
-            time.sleep(1)
-            print('TRAINING:',x,' ' ,y,' ABILITY NEW')
-            
-            close(final_point=(879,658))
-            print('New Ability CHECK')
-            time.sleep(2)
-            pyautogui.moveTo(x, y, duration=0)
-
-            time.sleep(2)
+        if (x, y) == (1313, 162):
+            print('Checking ABILITY AND EVOLUTION OR NOT')
+            capture_snippet('new_ability',635,407,500,250)
+            if compare_images(image1_name='new_ability_static',image2_name='new_ability',threshold_score=0.7):
+                time.sleep(1)
+                print('TRAINING:',x,' ' ,y,' ABILITY NEW')
+                close((879,658))
+                print('New Ability CHECK')
+                time.sleep(2)
+                pyautogui.moveTo(x, y, duration=0)
+            time.sleep(3)
+            capture_snippet(x =587 ,y =208 ,name = 'evolution_or_not',width=150,height=40)
+            if compare_images(image1_name='evolution_or_not',image2_name='evolution_static',threshold_score=0.7):
+                print('MISCRIT EVOLUTION')
+                close((878, 813))
+                time.sleep(2)
+                close((878, 759))
+                time.sleep(1)
+                pyautogui.moveTo(x, y, duration=0.5)
+                time.sleep(2)
         pyautogui.click()
     return True
         
